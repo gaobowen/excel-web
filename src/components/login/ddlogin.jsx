@@ -16,7 +16,7 @@ class DDLogin extends React.Component {
             REDIRECT_URI: 'https://gaobowen.github.io/excel-web/login/dingding' //https://gaobowen.github.io/excel-web
         }
     }
-    componentWillMount() {
+    UNSAFE_componentWillMount () {
         // 触发回调时处理回调链接,举例：如果查询字符串中含有state,且为dinglogin（可自行设置）,
         // 则触发扫描登录的相应处理方法，比如登录。
         if (this.props.location.search === undefined) {
@@ -65,16 +65,16 @@ class DDLogin extends React.Component {
         // 监听消息处理方法
         const handleMessage = (event) => {
             // 获取loginTempCode
-            const loginTempCode = event.data;
+            //const loginTempCode = event.data;
             // 获取消息来源
             const origin = event.origin;
             // 拼接 url
-            const url = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${this.state.APPID}&response_type=code&scope=snsapi_login&state=dinglogin&redirect_uri=${this.state.REDIRECT_URI}&loginTmpCode=${loginTempCode}`
+            //const url = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${this.state.APPID}&response_type=code&scope=snsapi_login&state=dinglogin&redirect_uri=${this.state.REDIRECT_URI}&loginTmpCode=${loginTempCode}`
             // 如果来源为https://login.dingtalk.com，则在当前窗口打开回调链接
             if (origin === 'https://login.dingtalk.com') {
                 
                 this.props.loginDingding({});
-                
+
                 // github pages 为静态页面跳转后会丢失页面js信息。这里跳过此步骤
                 //window.open(encodeURI(url), '_parent')
             }
@@ -109,7 +109,8 @@ class DDLogin extends React.Component {
 }
 
 DDLogin.propTypes = {
-    loginDingding: PropTypes.func.isRequired
+    loginDingding: PropTypes.func.isRequired,
+    location : PropTypes.object.isRequired,
 }
 
 export default connect(

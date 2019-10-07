@@ -4,11 +4,11 @@ import { message } from 'antd';
 
 let httpApi = {};
 
-let dingurl = 'https://oapi.dingtalk.com/sns/getuserinfo_bycode?accessKey=dingoauctaoft7kia4pdvx';
+//let dingurl = 'https://oapi.dingtalk.com/sns/getuserinfo_bycode?accessKey=dingoauctaoft7kia4pdvx';
 
-httpApi.postDinging = (params) => {
+httpApi.postDinging = () => {
     //(axios.post(dingurl,{})) 此api需要服务端完成，这里用timeout模拟
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         cookie.remove('loginCookie', { path: '/' })
         setTimeout(() => {
             let retobj = {

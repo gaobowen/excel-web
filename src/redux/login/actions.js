@@ -1,4 +1,4 @@
-import { DINGDING_LOGIN, GITHUB_LOGIN, USER_LOGOUT, RECEIVE_USER_INFO } from './action-types';
+import { USER_LOGOUT, RECEIVE_USER_INFO } from './action-types';
 import httpApi from '../../http' 
 
 //import axios from 'axios'

@@ -9,14 +9,7 @@ import '../../static/css/loginview.css'
 
 
 class LoginView extends React.Component {
-  //PropTypes.shape 用于检测对象的不同属性的不同类型
-  static propTypes = {
-    options:
-      PropTypes.shape({
-        loginMode: PropTypes.string.isRequired,
-      }),
-  }
-
+  
   // 设置props默认值防止报错
   static defaultProps = {
     options: {
@@ -89,8 +82,17 @@ class LoginView extends React.Component {
       </div>
     )
   }
-
-
 }
+
+//PropTypes.shape 用于检测对象的不同属性的不同类型
+LoginView.propTypes = {
+  options:
+    PropTypes.shape({
+      loginMode: PropTypes.string.isRequired,
+    }),
+    location: PropTypes.object.isRequired,
+    history : PropTypes.object.isRequired,
+}
+
 
 export default withRouter(LoginView);

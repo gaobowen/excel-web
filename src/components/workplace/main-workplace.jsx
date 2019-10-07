@@ -1,5 +1,4 @@
 import React from 'react';
-import { Layout } from 'antd';
 import ExcelSheet from './excel-sheet'
 import UserHeader from './user-header'
 import ToolsHeader from './tools-header'
@@ -8,6 +7,7 @@ import cookie from 'react-cookies'
 import { connect } from 'react-redux'
 import { receiveUserInfo } from '../../redux/login/actions'
 import { changedExcelSize } from '../../redux/workplace/actions'
+import  PropTypes  from 'prop-types';
 
 import '../../static/css/main-workplace.css'
 
@@ -59,6 +59,13 @@ class MainWorkplace extends React.Component {
     }
 }
 
+MainWorkplace.propTypes ={
+    history : PropTypes.object.isRequired,
+    login :PropTypes.object.isRequired,
+    excelSheet : PropTypes.object.isRequired,
+    receiveUserInfo : PropTypes.func.isRequired,
+    changedExcelSize : PropTypes.func.isRequired,
+}
 
 export default connect(
     state => (state),

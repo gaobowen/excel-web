@@ -138,67 +138,74 @@ const blankData = initGridDatas();
 const gridDatas = (state = blankData, action) => {
     switch (action.type) {
         case ADD_EXCEL_SHEET:
-            let addstate = {...(state) }
+            {
+                let addstate = { ...(state) }
                 //let adddic = {...(state.dic) }
-            let nameidx = addstate.length + 1;
-            //sheetname 不能重复，否则download会报错
-            for (let asKey in addstate.dic) {
-                if (addstate.dic[asKey].name === ('Sheet' + nameidx)) {
-                    nameidx++;
+                let nameidx = addstate.length + 1;
+                //sheetname 不能重复，否则download会报错
+                for (let asKey in addstate.dic) {
+                    if (addstate.dic[asKey].name === ('Sheet' + nameidx)) {
+                        nameidx++;
+                    }
                 }
+                let addkey = getStamp();
+                addstate.dic[addkey] = {
+                    grid: creatBlankGridData(),
+                    name: 'Sheet' + nameidx
+                };
+                addstate['selectedKey'] = addkey;
+                addstate.length += 1;
+                return addstate;
             }
-            let addkey = getStamp();
-            addstate.dic[addkey] = {
-                grid: creatBlankGridData(),
-                name: 'Sheet' + nameidx
-            };
-            addstate['selectedKey'] = addkey;
-            addstate.length += 1;
-            return addstate;
         case REMOVE_EXCEL_SHEET:
-            //至少需要存在一张表
-            if (state.length < 2) {
+            {
+                //至少需要存在一张表
+                if (state.length < 2) {
+                    return state;
+                }
+                let rmdic = new Array();
+                let wouldSelect = undefined;
+                if (action.data.key !== state.selectedKey) {
+                    wouldSelect = state.selectedKey;
+                }
+                let hasRemove = false;
+                for (let key in state.dic) {
+                    if (key !== action.data.key) {
+                        rmdic[key] = state.dic[key]
+                        if (!wouldSelect) { wouldSelect = key }
+                        continue;
+                    }
+                    hasRemove = true;
+                }
+                if (hasRemove) {
+                    return {
+                        dic: rmdic,
+                        selectedKey: wouldSelect,
+                        length: state.length - 1
+                    };
+                }
                 return state;
             }
-            let rmdic = new Array();
-            let wouldSelect = undefined;
-            if (action.data.key !== state.selectedKey) {
-                wouldSelect = state.selectedKey;
-            }
-            let hasRemove = false;
-            for (let key in state.dic) {
-                if (key !== action.data.key) {
-                    rmdic[key] = state.dic[key]
-                    if (!wouldSelect) { wouldSelect = key }
-                    continue;
-                }
-                hasRemove = true;
-            }
-            if (hasRemove) {
-                return {
-                    dic: rmdic,
-                    selectedKey: wouldSelect,
-                    length: state.length - 1
-                };
-            }
-            return state;
         case CHANGE_EXCEL_SHEET_NAME:
-            let changeState = {...state }
-            if (state[action.data.key]) {
-                changeState.dic[action.data.key].name =
-                    action.data.name;
-                return changeState;
+            {
+                let changeState = { ...state }
+                if (state[action.data.key]) {
+                    changeState.dic[action.data.key].name =
+                        action.data.name;
+                    return changeState;
+                }
+                return state;
             }
-            return state;
         case CHANGE_EXCEL_SHEET_SELECTED:
-            let selectedState = {...state }
-            if (selectedState['selectedKey']) {
-                selectedState['selectedKey'] =
-                    action.data.key;
-                return selectedState;
+            {
+                let selectedState = { ...state }
+                if (selectedState['selectedKey']) {
+                    selectedState['selectedKey'] =
+                        action.data.key;
+                    return selectedState;
+                }
+                return state;
             }
-            //console.log(selectedState)
-            return state;
         case DOWNLOAD_EXCEL:
             download(state.dic)
             return state;

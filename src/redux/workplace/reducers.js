@@ -1,4 +1,4 @@
-import { CHANGED_EXCEL_SIZE, ADD_EXCEL_SHEET, REMOVE_EXCEL_SHEET, CHANGE_EXCEL_SHEET_NAME } from './action-types'
+import { CHANGED_EXCEL_SIZE } from './action-types'
 
 const initSize = { width: 0, height: 0 }
 

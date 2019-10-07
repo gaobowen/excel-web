@@ -25,9 +25,6 @@ class MainLogin extends React.Component {
     }
   }
 
-  receiveUserInfo(params) {
-
-  }
 
   componentDidMount() {
     if (this.props.userInfo.username !== undefined) {
@@ -67,6 +64,7 @@ class MainLogin extends React.Component {
 MainLogin.propTypes = {
   userInfo: PropTypes.object.isRequired,
   receiveUserInfo: PropTypes.func.isRequired,
+  history :PropTypes.object.isRequired,
 }
 
 //react diff 通过setState来更新ui，这里绑定的数据越小，ui更新的效率就越高

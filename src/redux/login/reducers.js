@@ -12,18 +12,21 @@ function login(state = initState, action) {
       return state;
     case USER_LOGOUT:
       //删除缓存的额cookie，把状态设置为初始值
-      cookie.remove('loginCookie',{ path: '/' });
+      cookie.remove('loginCookie', { path: '/' });
       return { ...initState };
     case RECEIVE_USER_INFO:
-      let ret = { ...action.data }
-      if (action.data.errcode !== undefined) {
-        ret.userInfo.errcode = action.data.errcode;
+      // 这里的case要用大括号，防止变量穿透，由eslint报错提醒
+      {
+        let ret = { ...action.data };
+        if (action.data.errcode !== undefined) {
+          ret.userInfo.errcode = action.data.errcode;
+        }
+        else {
+          ret.userInfo.errcode = 0;
+        }
+        //console.log(ret);
+        return { ...ret };
       }
-      else {
-        ret.userInfo.errcode = 0;
-      }
-      //console.log(ret);
-      return { ...ret };
     default:
       return { ...state };
   }

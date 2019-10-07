@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { logout } from '../../redux/login/actions'
 import { downloadExcel } from '../../redux/workplace/actions'
+import PropTypes from 'prop-types'
+
 
 
 import { Dropdown, Menu, Avatar, Button } from 'antd'
@@ -17,7 +19,7 @@ class UserHeader extends React.Component {
         this.handleMenuClick = e => {
             if (e.key === '2') {
                 this.props.logout({});
-                window.open(encodeURI('http://' +window.location.host +'/excel-web'), '_parent');
+                window.open(encodeURI('http://' + window.location.host + '/excel-web'), '_parent');
             }
         };
 
@@ -54,6 +56,13 @@ class UserHeader extends React.Component {
         );
     }
 }
+
+UserHeader.propTypes ={
+    login : PropTypes.object.isRequired,
+    logout : PropTypes.func.isRequired,
+    downloadExcel : PropTypes.func.isRequired,
+}
+
 
 export default connect(
     state => state,
