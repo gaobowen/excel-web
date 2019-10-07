@@ -4,9 +4,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { loginDingding } from '../../redux/login/actions'
 
-//import axios from 'axios'
-//import httpApi from '../../http'
-// import CryptoJS from 'crypto-js/crypto-js'
 
 // https://ding-doc.dingtalk.com/doc#/serverapi3/mrugr3
 class DDLogin extends React.Component {
@@ -14,9 +11,9 @@ class DDLogin extends React.Component {
         super(props)
         this.state = {
             // 测试 appid
-            APPID: 'dingoauctaoft7kia4pdvx',
+            APPID: 'dingoauctaoft7kia4pdvx',  
             // 跳转页面
-            REDIRECT_URI: 'https://gaobowen.github.io/excel-web'
+            REDIRECT_URI: 'https://gaobowen.github.io/excel-web/login/dingding' //https://gaobowen.github.io/excel-web
         }
     }
     componentWillMount() {
@@ -35,7 +32,7 @@ class DDLogin extends React.Component {
                 kv[pairs[0].toString()] = pairs[1];
             }
             //模拟获取用户数据
-            //console.log('this.props.location.search.indexOf')
+            console.log('this.props.location.search.indexOf')
             this.props.loginDingding({});
             return;
             //getuserinfo_bycode为服务端api 前端不支持
