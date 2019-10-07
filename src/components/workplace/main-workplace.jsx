@@ -27,7 +27,7 @@ class MainWorkplace extends React.Component {
 
     componentDidMount() {
         if (this.props.login.userInfo.username === undefined) {
-            this.props.history.replace('/login')
+            this.props.history.replace('/excel-web/login/github')
         }
     }
 

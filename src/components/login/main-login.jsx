@@ -31,12 +31,12 @@ class MainLogin extends React.Component {
 
   componentDidMount() {
     if (this.props.userInfo.username !== undefined) {
-      this.props.history.replace('/excel-web', this.state);
+      this.props.history.replace('/excel-web/sheet', this.state);
     }
   }
   componentDidUpdate() {
     if (this.props.userInfo.username !== undefined) {
-      this.props.history.replace('/excel-web', this.state);
+      this.props.history.replace('/excel-web/sheet', this.state);
     }
   }
 

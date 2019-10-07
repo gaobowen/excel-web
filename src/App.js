@@ -9,8 +9,8 @@ class App extends React.Component {
   render() {
     return (< div className="App" >
       < Switch >
+        < Route path='/excel-web/sheet' component={MainWorkplace} />
         < Route path='/excel-web/login' component={MainLogin} />
-        < Route path='/excel-web' component={MainWorkplace} />
         < Redirect to='/excel-web/login' />
       </Switch >
     </div >

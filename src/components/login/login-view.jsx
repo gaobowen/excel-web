@@ -82,7 +82,7 @@ class LoginView extends React.Component {
           <Switch>
             <Route path='/excel-web/login/dingding' component={DDLogin} />
             <Route path='/excel-web/login/github' component={GithubLogin}/>
-            <Redirect to='/excel-web/login/dingding' />
+            <Redirect to='/excel-web/login/github' />
           </Switch>
         </div>
       </div>
