@@ -1,0 +1,10 @@
+.tools-footer {
+    float: left;
+    padding-left: 30px;
+    padding-top: 5px;
+}
+
+.ant-tabs.ant-tabs-card .ant-tabs-extra-content {
+    margin-left: 10px;
+    padding-top: 0px;
+}

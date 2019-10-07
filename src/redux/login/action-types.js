@@ -1,0 +1,6 @@
+export const DINGDING_LOGIN = 'DINGDING_LOGIN';
+export const GITHUB_LOGIN = 'GITHUB_LOGIN';
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO';
+
+

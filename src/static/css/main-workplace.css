@@ -1,0 +1,49 @@
+.excel-main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.layout-main {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.content-main {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    padding-bottom: 40px;
+    padding-top: 100px;
+}
+
+.tool-header {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    top: 0%;
+    background-color: #f8f8f8;
+}
+
+.tool-footer-container {
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    bottom: 0%;
+    /* background-color: black; */
+    background-color: #f8f8f8;
+}
+
+.excel-container {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.excel-component {
+    position: relative;
+    background-color: white;
+}

@@ -1,0 +1,5 @@
+@import url(./react-datasheet.css);
+
+.data-grid-container .data-grid {
+    width: 100%;
+} 

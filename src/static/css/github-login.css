@@ -1,0 +1,20 @@
+.login-username-input{
+    margin-top: 20px;
+    background-color: #ffffffa0;
+}
+
+.login-username-text{
+    margin-top: 10%;
+    text-align: center;
+    color: #222;
+}
+
+.login-github-btn{
+    margin-top: 10%;
+    width: 50%;
+}
+
+.login-github-svg{
+    margin-top: 8%;
+}
+

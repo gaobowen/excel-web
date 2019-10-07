@@ -1,0 +1,64 @@
+/* position:'absolute'与left top等联合使用*/
+.login-view{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    background-color:transparent;
+}
+.tab-div{
+    height: 44px;
+}
+
+.tabs { 
+    list-style:none;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #e7f0f1;
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    float: right;
+
+}
+
+.tabs .tab-item{
+    text-align: center;
+    list-style:none;
+    float: left;
+    width: 199px;
+    height: 100%;
+    line-height: 45px;
+    border-color: #c6e0ec;
+    border-right: 1px solid #e1e1e1;
+    font-size: 13px;
+    color: #7d7d7e;
+    background-color: #eee;
+    cursor: pointer;
+    
+}
+
+/*有空格表示下一级元素，无空格表示当前层级*/
+.tabs .tab-item.current { 
+    border-left: 0;
+    background-color: #c6e0ec;
+    border-color: #c6e0ec;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: 1px 0 3px rgba(0,0,0,.2), -1px 0 3px rgba(0,0,0,.2);
+    font-size: 16px;
+    color: #222;
+    position: relative;  /*解决阴影被遮住的问题*/
+}
+
+.login-view-content{
+    padding-top: 35px;
+    margin: auto;
+    text-align: center;
+    width: 350px;
+    height: 350px;
+    background-color: transparent;
+}
+

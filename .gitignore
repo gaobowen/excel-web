@@ -1,0 +1,8 @@
+node_modules/
+build/
+.DS_STORE
+.idea
+*.iml
+.vscode
+*.swp
+*.swo
