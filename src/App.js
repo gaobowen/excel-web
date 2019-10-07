@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-//import { receiveUserInfo } from './redux/login/actions'
+
 import MainLogin from './components/login/main-login'
 import MainWorkplace from './components/workplace/main-workplace'
 import { Route, Switch, Redirect, Router } from 'react-router-dom'
@@ -17,18 +17,17 @@ class App extends React.Component {
 
 
 
-  render() {
-    
-    return (
-      <div className="App">
-        <Switch>
-          <Route path='/login' component={MainLogin}/>
-          <Route path='/excel-web' component={MainWorkplace}/>
-          <Redirect to='/login'/>
-        </Switch> 
-      </div>
-    );
-  }
+    render() {
+
+        return (< div className="App" >
+            < Switch >
+                < Route path='/excel-web/login' component={MainLogin} />
+                < Route path='/excel-web' component={MainWorkplace} />
+                < Redirect to='/excel-web/login' />
+            </Switch >
+        </div >
+        );
+    }
 
 
 }

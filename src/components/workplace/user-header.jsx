@@ -17,7 +17,7 @@ class UserHeader extends React.Component {
         this.handleMenuClick = e => {
             if (e.key === '2') {
                 this.props.logout({});
-                window.open(encodeURI('http://' +window.location.host), '_parent');
+                window.open(encodeURI('http://' +window.location.host +'/excel-web'), '_parent');
             }
         };
 

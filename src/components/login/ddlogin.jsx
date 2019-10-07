@@ -16,7 +16,7 @@ class DDLogin extends React.Component {
             // 测试 appid
             APPID: 'dingoauctaoft7kia4pdvx',
             // 跳转页面
-            REDIRECT_URI: 'https://gaobowen.github.io/'
+            REDIRECT_URI: 'https://gaobowen.github.io/excel-web'
         }
     }
     componentWillMount() {

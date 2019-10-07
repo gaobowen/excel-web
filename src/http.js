@@ -32,18 +32,23 @@ httpApi.getGithub = async(username) => {
             errcode: 0
         }
     };
-    let resp = await axios.get(`https://api.github.com/users/${username}`);
-    //debugger;
-    cookie.remove('loginCookie', { path: '/' })
-    if (resp.data.login !== undefined) {
-        retobj.userInfo.username = resp.data.login;
-        retobj.userInfo.avatarUrl = resp.data.avatar_url;
-        cookie.save('loginCookie', window.btoa(JSON.stringify(retobj)), { path: '/' });
-
-    } else {
-        message.error('');
-        retobj.errcode = -1;
+    try {
+        let resp = await axios.get(`https://api.github.com/users/${username}`);
+        //debugger;
+        cookie.remove('loginCookie', { path: '/' })
+        if (resp.data.login !== undefined) {
+            retobj.userInfo.username = resp.data.login;
+            retobj.userInfo.avatarUrl = resp.data.avatar_url;
+            cookie.save('loginCookie', window.btoa(JSON.stringify(retobj)), { path: '/' });
+    
+        } else {
+            message.error('User name not found.');
+            retobj.errcode = -1;
+        }
+    } catch (error) {
+        message.error('User name not found.');
     }
+
 
     return retobj;
 

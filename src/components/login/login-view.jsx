@@ -32,7 +32,7 @@ class LoginView extends React.Component {
     }
     if(props.location !== undefined)
     {
-      if(props.location.pathname === '/login/github')
+      if(props.location.pathname === '/excel-web/login/github')
       {
         props.options.loginMode = 'github';
       }
@@ -51,7 +51,7 @@ class LoginView extends React.Component {
     let loginMode = event.target.id === 'tab-li-github' ? 'github' : 'dingding';
     // 使用props.history前首先使用withRoute
     //console.log(this.props.history);
-    this.props.history.replace('/login/' + loginMode);
+    this.props.history.replace('/excel-web/login/' + loginMode);
     this.setState({ options: { loginMode } });
   }
 
@@ -80,9 +80,9 @@ class LoginView extends React.Component {
         
         <div className='login-view-content' key={this.props.location.key}>
           <Switch>
-            <Route path='/login/dingding' component={DDLogin} />
-            <Route path='/login/github' component={GithubLogin}/>
-            <Redirect to='/login/dingding' />
+            <Route path='/excel-web/login/dingding' component={DDLogin} />
+            <Route path='/excel-web/login/github' component={GithubLogin}/>
+            <Redirect to='/excel-web/login/dingding' />
           </Switch>
         </div>
       </div>
