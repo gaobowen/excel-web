@@ -72,8 +72,10 @@ class DDLogin extends React.Component {
             const url = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${this.state.APPID}&response_type=code&scope=snsapi_login&state=dinglogin&redirect_uri=${this.state.REDIRECT_URI}&loginTmpCode=${loginTempCode}`
             // 如果来源为https://login.dingtalk.com，则在当前窗口打开回调链接
             if (origin === 'https://login.dingtalk.com') {
-                //console.log('this.props.location.search.indexOf')
+                
                 this.props.loginDingding({});
+                
+                // github pages 为静态页面跳转后会丢失页面js信息。这里跳过此步骤
                 //window.open(encodeURI(url), '_parent')
             }
         };
