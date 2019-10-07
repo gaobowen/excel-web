@@ -1,6 +1,6 @@
 # Excel Web
 
-## description
+## Description
 This is a react web app,that implement excel base features.
 
 You can preview features at [excel-web](https://gaobowen.github.io/excel-web/).
