@@ -5,7 +5,6 @@ import {
     CHANGE_EXCEL_SHEET_SELECTED,
     DOWNLOAD_EXCEL
 } from './action-types'
-
 import Excel from 'exceljs';
 import FileSaver from 'file-saver'
 
@@ -55,8 +54,7 @@ const creatBlankGridData = (isTest) => {
             } else if (row > 0 && col === 0) {
                 initGrid[row].push({ readOnly: true, value: row })
             } else {
-
-                //坐标验证
+                //坐标测试验证
                 if (isTest) {
                     if (row > 0 && col > 0) {
                         var coor = getCoordinates(initGrid[0][col].value + row)
@@ -76,8 +74,6 @@ const creatBlankGridData = (isTest) => {
 
 const download = (dic) => {
     const wb = new Excel.Workbook();
-
-    //sheet name
     for (let key in dic) {
         const ws = wb.addWorksheet(dic[key].name);
         ws.properties.defaultRowHeight = 16;
@@ -107,10 +103,7 @@ const download = (dic) => {
 
 const getStamp = () => (new Date().getTime().toString() + parseInt(Math.random() * 100))
 
-
-//key name data
 const initGridDatas = () => {
-
     //字典
     let dic = new Array();
     let key1 = getStamp()
@@ -122,7 +115,6 @@ const initGridDatas = () => {
         name: 'Sheet2',
         grid: creatBlankGridData(true),
     }
-
     return {
         dic,
         selectedKey: key1,
@@ -130,17 +122,14 @@ const initGridDatas = () => {
     };
 
 }
+
 const blankData = initGridDatas();
 
-//UserHeader绑定
-//sheet模块绑定
-//footer模块绑定
 const gridDatas = (state = blankData, action) => {
     switch (action.type) {
         case ADD_EXCEL_SHEET:
             {
                 let addstate = { ...(state) }
-                //let adddic = {...(state.dic) }
                 let nameidx = addstate.length + 1;
                 //sheetname 不能重复，否则download会报错
                 for (let asKey in addstate.dic) {

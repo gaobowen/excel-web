@@ -67,7 +67,7 @@ MainLogin.propTypes = {
   history :PropTypes.object.isRequired,
 }
 
-//react diff 通过setState来更新ui，这里绑定的数据越小，ui更新的效率就越高
+//react diff 通过setState来更新ui，这里绑定的数据集合越小，ui更新的次数越少
 //这里的state.login
 export default connect(
   state => ({ userInfo: state.login.userInfo }),

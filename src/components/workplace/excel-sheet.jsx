@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import Datasheet from 'react-datasheet';
 import { connect } from 'react-redux'
 import { changedExcelSize ,changeExcelSheetSelected} from '../../redux/workplace/actions'
@@ -12,15 +13,6 @@ import '../../static/css/excel-sheet.css'
 class ExcelSheet extends React.Component {
     constructor(props) {
         super(props)
-
-        //console.log(this.getCoordinates('AA1'));
-        //console.log(initGrid);
-        //console.log(this.props) 
-        // this.state = {
-        //     grid: this.props.gridDatas.dic[this.props.gridDatas.selectedKey].grid,
-        // }
-
-        //console.log(this.state)
     }
 
 
@@ -41,7 +33,7 @@ class ExcelSheet extends React.Component {
                 let temp = (Math.pow(26, colstr.length - index - 1) * charIdx)
                 colno += temp;
             }
-            // x列 y行
+            // x列号 y行号
             return { x: colno - 1, y: parseInt(row[0]) - 1 }
         }
     }
@@ -80,14 +72,9 @@ class ExcelSheet extends React.Component {
     }
 
     render() {
-        //console.log(this.props.gridDatas)
         this.grid = this.props.gridDatas.dic[this.props.gridDatas.selectedKey].grid;
-        //console.log(this.coordinates('BA87'));
-        //console.log(this.getPositionStr({ x: 25, y: 86 }));
-        //console.log(this.getPositionStrX(25));
         this.totalWidth = this.grid[0].length * 60;
         this.totalHeight = this.grid.length * 22;
-        //console.log(this.totalHeight)
         if (this.totalWidth !== this.props.excelSheet.width
             || this.totalHeight !== this.props.excelSheet.height) {
             this.props.changedExcelSize({
@@ -95,17 +82,17 @@ class ExcelSheet extends React.Component {
                 height: this.totalHeight,
             })
         }
-        //console.log(this.props)
 
         return (
             <div style={{ width: this.totalWidth }}>
                 <Datasheet
                     data={this.grid}
                     valueRenderer={(cell) => cell.value}
+                    // eslint-disable-next-line no-unused-vars
                     onContextMenu={(e, cell, i, j) => cell.readOnly ? e.preventDefault() : null}
                     onCellsChanged={changes => {
                         const grid = this.grid.map(row => [...row])
-                        changes.forEach(({ cell, row, col, value }) => {
+                        changes.forEach(({ row, col, value }) => {
                             this.grid[row][col] = { ...grid[row][col], value }
                         })
                         this.render()
@@ -114,6 +101,13 @@ class ExcelSheet extends React.Component {
             </div>
         )
     }
+}
+
+ExcelSheet.propTypes = {
+    gridDatas : PropTypes.object.isRequired,
+    excelSheet : PropTypes.object.isRequired,
+    changedExcelSize : PropTypes.func.isRequired,
+    changeExcelSheetSelected : PropTypes.func.isRequired,
 }
 
 export default connect(

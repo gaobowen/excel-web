@@ -1,2 +1,3 @@
 src/App.test.js
 src/serviceWorker.js
+config-overrides.js

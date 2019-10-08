@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
-import GithubLogin from './github-login'
 import DDLogin from './ddlogin';
+import GithubLogin from './github-login'
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
 
-//编写静态页面首先引入css
 import '../../static/css/loginview.css'
 
 
@@ -40,10 +39,8 @@ class LoginView extends React.Component {
   }
 
   changeLoginMode = (event) => {
-    // console.log(event.target);
     let loginMode = event.target.id === 'tab-li-github' ? 'github' : 'dingding';
     // 使用props.history前首先使用withRoute
-    //console.log(this.props.history);
     this.props.history.replace('/excel-web/login/' + loginMode);
     this.setState({ options: { loginMode } });
   }
@@ -54,7 +51,6 @@ class LoginView extends React.Component {
     //解决方案：
     //1、把路由相关参数在state中剥离
     //2、state中相关的默认参数根据路由重新负责
-    //console.log(this.props)
 
     return (
       <div className='login-view'>

@@ -32,7 +32,6 @@ class MainWorkplace extends React.Component {
     }
 
     render() {
-        //console.log(this.props)
         return (
             <div className='excel-main'>
                 <div className='tool-header'>

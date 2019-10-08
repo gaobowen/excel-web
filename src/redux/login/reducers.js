@@ -6,7 +6,8 @@ const initState = { userInfo: { errcode: 0 } };
 
 function login(state = initState, action) {
   switch (action.type) {
-    case DINGDING_LOGIN: //login的状态触发由receive完成
+    //login的状态触发由receive完成
+    case DINGDING_LOGIN: 
       return state;
     case GITHUB_LOGIN:
       return state;
@@ -24,7 +25,6 @@ function login(state = initState, action) {
         else {
           ret.userInfo.errcode = 0;
         }
-        //console.log(ret);
         return { ...ret };
       }
     default:

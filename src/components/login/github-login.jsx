@@ -2,11 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loginGithub } from '../../redux/login/actions'
-
-//安装 react-app-rewired
-//安装 babel-plugin-import"
-//安装 customize-cra
-//antd 样式按需加载的文档写漏了，还需要修改package.json文件中的启动脚本  "start": "react-app-rewired start"
 import { Input, Button, Avatar } from 'antd'
 
 import githubimg from '../../static/images/login/github.svg';

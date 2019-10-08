@@ -1,7 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import DingQrcodeLogin from './ding-qrcode-login'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { loginDingding } from '../../redux/login/actions'
 
 
@@ -20,7 +20,6 @@ class DDLogin extends React.Component {
         // 触发回调时处理回调链接,举例：如果查询字符串中含有state,且为dinglogin（可自行设置）,
         // 则触发扫描登录的相应处理方法，比如登录。
         if (this.props.location.search === undefined) {
-            //console.log(this.props.location)
             return;
         }
         //const state = this.props.location && this.props.location.query.state;
@@ -32,7 +31,6 @@ class DDLogin extends React.Component {
                 kv[pairs[0].toString()] = pairs[1];
             }
             //模拟获取用户数据
-            console.log('this.props.location.search.indexOf')
             this.props.loginDingding({});
             return;
             //getuserinfo_bycode为服务端api 前端不支持
@@ -72,9 +70,7 @@ class DDLogin extends React.Component {
             //const url = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${this.state.APPID}&response_type=code&scope=snsapi_login&state=dinglogin&redirect_uri=${this.state.REDIRECT_URI}&loginTmpCode=${loginTempCode}`
             // 如果来源为https://login.dingtalk.com，则在当前窗口打开回调链接
             if (origin === 'https://login.dingtalk.com') {
-                
                 this.props.loginDingding({});
-
                 // github pages 为静态页面跳转后会丢失页面js信息。这里跳过此步骤
                 //window.open(encodeURI(url), '_parent')
             }
@@ -87,7 +83,7 @@ class DDLogin extends React.Component {
         }
     }
 
-    //这是错误的写法，方法需要绑定，也可以使用箭头函数自动绑定
+    //这是错误的写法，方法需要绑定，或者可以使用箭头函数自动绑定
     loginDingding() {
         console.log('loginDingding')
     }

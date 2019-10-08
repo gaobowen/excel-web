@@ -1,11 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logout } from '../../redux/login/actions'
 import { downloadExcel } from '../../redux/workplace/actions'
-import PropTypes from 'prop-types'
-
-
-
 import { Dropdown, Menu, Avatar, Button } from 'antd'
 
 import '../../static/css/user-header.css'
@@ -15,7 +12,6 @@ class UserHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        //console.log(this.props);
         this.handleMenuClick = e => {
             if (e.key === '2') {
                 this.props.logout({});
