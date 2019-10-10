@@ -40,35 +40,25 @@ class ExcelSheet extends React.Component {
 
     //坐标转字符串index 从0开始
     getPositionStr = (coordinates) => {
-        let baseCode = 'A'.charCodeAt();
         let x = parseInt(coordinates.x);
-        let x1 = String.fromCharCode(x % 26 + baseCode);
-        do {
-            x = parseInt(x / 26);
-            if (x > 0) {
-                x1 = String.fromCharCode(x % 26 + baseCode - 1) + x1
-            }
-            else
-                break;
-        }
-        while (parseInt(x / 26) > 0)
-        return x1 + (coordinates.y + 1);
+        return this.getPositionStrX(x) + (coordinates.y + 1);
     }
 
     getPositionStrX = (inputX) => {
-        let baseCode = 'A'.charCodeAt();
-        let x = parseInt(inputX);
-        let x1 = String.fromCharCode(parseInt((x) % 26 + baseCode));
-        do {
-            x = parseInt(x / 26);
-            if (x > 0) {
-                x1 = String.fromCharCode(parseInt(x % 26 + baseCode - 1)) + x1
-            }
-            else
-                break;
+        if (inputX < 0) {
+            throw Error('Error getPositionStrX inputX < 1')
         }
-        while (parseInt(x / 26) > 0)
-        return x1;
+        let codeA = 'A'.charCodeAt(0);
+        let inX = inputX + 1;
+        let x = ''
+        do {
+            let numIdx = inX - 1;
+            let ascIdx = numIdx % 26;
+            x = String.fromCharCode(codeA + ascIdx) + x;
+            inX = parseInt(numIdx / 26);
+        }
+        while (inX > 0)
+        return x;
     }
 
     render() {

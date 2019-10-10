@@ -9,19 +9,22 @@ import Excel from 'exceljs';
 import FileSaver from 'file-saver'
 
 const getPositionStrX = (inputX) => {
-    let baseCode = 'A'.charCodeAt();
-    let x = parseInt(inputX);
-    let x1 = String.fromCharCode(parseInt((x) % 26 + baseCode));
-    do {
-        x = parseInt(x / 26);
-        if (x > 0) {
-            x1 = String.fromCharCode(parseInt(x % 26 + baseCode - 1)) + x1
-        } else
-            break;
+    if (inputX < 0) {
+        throw Error('Error getPositionStrX inputX < 1')
     }
-    while (parseInt(x / 26) > 0)
-    return x1;
+    let codeA = 'A'.charCodeAt(0);
+    let inX = inputX + 1;
+    let x = ''
+    do {
+        let numIdx = inX - 1;
+        let ascIdx = numIdx % 26;
+        x = String.fromCharCode(codeA + ascIdx) + x;
+        inX = parseInt(numIdx / 26);
+    }
+    while (inX > 0)
+    return x;
 }
+
 
 const getCoordinates = (positionStr) => {
     const row = positionStr.match(/[0-9]+/g) || [];

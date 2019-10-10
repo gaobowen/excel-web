@@ -36,7 +36,7 @@ Download your sheets as .xslx file. And you can open it in MS Office.
 
 
 ## Future
-More features would be added. 
+More features will be added. 
 
 
 
