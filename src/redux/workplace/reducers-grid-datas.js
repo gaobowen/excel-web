@@ -10,7 +10,7 @@ import FileSaver from 'file-saver'
 
 const getPositionStrX = (inputX) => {
     if (inputX < 0) {
-        throw Error('Error getPositionStrX inputX < 1')
+        throw Error('Error getPositionStrX inputX < 0')
     }
     let codeA = 'A'.charCodeAt(0);
     let inX = inputX + 1;
@@ -44,7 +44,7 @@ const getCoordinates = (positionStr) => {
     }
 }
 
-const creatBlankGridData = (isTest) => {
+const createBlankGridData = (isTest) => {
     let initGrid = [];
     for (let row = 0; row < 60; row++) {
         initGrid.push([]);
@@ -66,9 +66,7 @@ const creatBlankGridData = (isTest) => {
                 } else {
                     initGrid[row].push({ value: `` })
                 }
-
             }
-
         }
     }
     return initGrid;
@@ -112,11 +110,11 @@ const initGridDatas = () => {
     let key1 = getStamp()
     dic[key1] = {
         name: 'Sheet1',
-        grid: creatBlankGridData(false),
+        grid: createBlankGridData(false),
     }
     dic[getStamp()] = {
         name: 'Sheet2',
-        grid: creatBlankGridData(true),
+        grid: createBlankGridData(true),
     }
     return {
         dic,
@@ -142,7 +140,7 @@ const gridDatas = (state = blankData, action) => {
                 }
                 let addkey = getStamp();
                 addstate.dic[addkey] = {
-                    grid: creatBlankGridData(),
+                    grid: createBlankGridData(),
                     name: 'Sheet' + nameidx
                 };
                 addstate['selectedKey'] = addkey;

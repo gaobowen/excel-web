@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Datasheet from 'react-datasheet';
 import { connect } from 'react-redux'
-import { changedExcelSize ,changeExcelSheetSelected} from '../../redux/workplace/actions'
+import { changedExcelSize, changeExcelSheetSelected } from '../../redux/workplace/actions'
 
 import '../../static/css/excel-sheet.css'
 
 
 //此开源控件在每个cell上都单独处理了事件，当初始化数组达到几百上千行时，操作会延迟卡顿，
 //作为excel这种数据量比较大的控件来说，这样的设计思路是不可行的
-//excel正确的设计方式 因该是数据展示层上面，覆盖统一操作层（建议用canvas）作为交互层
+//excel正确的设计方式 因该是数据展示层在下面，上面覆盖统一操作层（建议用canvas）作为交互层
 class ExcelSheet extends React.Component {
     constructor(props) {
         super(props)
@@ -46,7 +46,7 @@ class ExcelSheet extends React.Component {
 
     getPositionStrX = (inputX) => {
         if (inputX < 0) {
-            throw Error('Error getPositionStrX inputX < 1')
+            throw Error('Error getPositionStrX inputX < 0')
         }
         let codeA = 'A'.charCodeAt(0);
         let inX = inputX + 1;
@@ -94,13 +94,13 @@ class ExcelSheet extends React.Component {
 }
 
 ExcelSheet.propTypes = {
-    gridDatas : PropTypes.object.isRequired,
-    excelSheet : PropTypes.object.isRequired,
-    changedExcelSize : PropTypes.func.isRequired,
-    changeExcelSheetSelected : PropTypes.func.isRequired,
+    gridDatas: PropTypes.object.isRequired,
+    excelSheet: PropTypes.object.isRequired,
+    changedExcelSize: PropTypes.func.isRequired,
+    changeExcelSheetSelected: PropTypes.func.isRequired,
 }
 
 export default connect(
     state => { return ({ gridDatas: state.gridDatas, excelSheet: state.excelSheet }) },
-    { changedExcelSize ,changeExcelSheetSelected}
+    { changedExcelSize, changeExcelSheetSelected }
 )(ExcelSheet);
