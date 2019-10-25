@@ -7,6 +7,7 @@ import { changedExcelSize, changeExcelSheetSelected } from '../../redux/workplac
 import '../../static/css/excel-sheet.css'
 
 
+
 //此开源控件在每个cell上都单独处理了事件，当初始化数组达到几百上千行时，操作会延迟卡顿，
 //作为excel这种数据量比较大的控件来说，这样的设计思路是不可行的
 //excel正确的设计方式 因该是数据展示层在下面，上面覆盖统一操作层（建议用canvas）作为交互层

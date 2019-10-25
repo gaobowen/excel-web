@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   addExcelSheet,
-  removeExcelSheet, 
-  changeExcelSheetName, 
-  changeExcelSheetSelected
+  removeExcelSheet,
+  changeExcelSheetName,
+  changeExcelSheetSelected,
+  hitTestOperate
 } from '../../redux/workplace/actions'
+
 
 import { Tabs } from 'antd';
 
@@ -14,18 +16,44 @@ import '../../static/css/tools-footer.css'
 
 const { TabPane } = Tabs;
 
+const initData = {
+  refObj: null,
+  eleType: 'cell',
+  hit: { x: 60, y: 22 },
+  rect: {
+    x: 60,
+    y: 22,
+    r: 0,
+    width: 60,
+    height: 22
+  },
+  preRect: {
+    x: 60,
+    y: 22,
+    r: 0,
+    width: 60,
+    height: 22
+  }
+}
+
 class ToolsFooter extends React.Component {
   constructor(props) {
     super(props);
   }
 
   onChange = activeKey => {
-    this.props.changeExcelSheetSelected({ key: activeKey })
+    this.props.changeExcelSheetSelected({ key: activeKey });
+    this.props.hitTestOperate({
+      ctrlData: initData,
+    })
   };
 
   onEdit = (targetKey, action) => {
     //action 包含下面的 add 和 remove
     this[action](targetKey);
+    this.props.hitTestOperate({
+      ctrlData: initData,
+    })
   };
 
   add = () => {
@@ -37,6 +65,10 @@ class ToolsFooter extends React.Component {
       key: targetKey
     })
   };
+
+  componentDidMount = () => {
+
+  }
 
   render() {
     this.panes = [];
@@ -67,11 +99,12 @@ class ToolsFooter extends React.Component {
 }
 
 ToolsFooter.propTypes = {
-  gridDatas : PropTypes.object.isRequired,
-  addExcelSheet : PropTypes.func.isRequired,
-  removeExcelSheet : PropTypes.func.isRequired,
-  changeExcelSheetName : PropTypes.func.isRequired,
-  changeExcelSheetSelected : PropTypes.func.isRequired,
+  gridDatas: PropTypes.object.isRequired,
+  addExcelSheet: PropTypes.func.isRequired,
+  removeExcelSheet: PropTypes.func.isRequired,
+  changeExcelSheetName: PropTypes.func.isRequired,
+  changeExcelSheetSelected: PropTypes.func.isRequired,
+  hitTestOperate: PropTypes.func.isRequired,
 }
 
 export default connect(
@@ -80,7 +113,8 @@ export default connect(
     addExcelSheet,
     removeExcelSheet,
     changeExcelSheetName,
-    changeExcelSheetSelected
+    changeExcelSheetSelected,
+    hitTestOperate
   }
 )(ToolsFooter)
 

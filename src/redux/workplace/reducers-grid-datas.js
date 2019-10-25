@@ -3,10 +3,18 @@ import {
     REMOVE_EXCEL_SHEET,
     CHANGE_EXCEL_SHEET_NAME,
     CHANGE_EXCEL_SHEET_SELECTED,
-    DOWNLOAD_EXCEL
+    DOWNLOAD_EXCEL,
+    GET_SELECTED_GRID,
+    ADD_DRAG_IMAGE,
+    SORT_MEDIA_ELEMENTS
 } from './action-types'
 import Excel from 'exceljs';
 import FileSaver from 'file-saver'
+
+const defaultCellSize = {
+    width: 60,
+    height: 22
+}
 
 const getPositionStrX = (inputX) => {
     if (inputX < 0) {
@@ -24,7 +32,6 @@ const getPositionStrX = (inputX) => {
     while (inX > 0)
     return x;
 }
-
 
 const getCoordinates = (positionStr) => {
     const row = positionStr.match(/[0-9]+/g) || [];
@@ -46,7 +53,7 @@ const getCoordinates = (positionStr) => {
 
 const createBlankGridData = (isTest) => {
     let initGrid = [];
-    for (let row = 0; row < 60; row++) {
+    for (let row = 0; row < 160; row++) {
         initGrid.push([]);
         for (let col = 0; col < 30; col++) {
             if (row === 0 && col === 0) {
@@ -77,7 +84,7 @@ const download = (dic) => {
     const wb = new Excel.Workbook();
     for (let key in dic) {
         const ws = wb.addWorksheet(dic[key].name);
-        ws.properties.defaultRowHeight = 16;
+        ws.properties.defaultRowHeight = 17;
         //这里行列不能搞混
         let rowcount = dic[key].grid.length;
         let colcount = dic[key].grid[0].length;
@@ -90,9 +97,35 @@ const download = (dic) => {
                     ws.addRow(rowdata);
                     row = ws.getRow(rowidx)
                 }
+                row.height = 17;
                 row.getCell(colidx).value = dic[key].grid[rowidx][colidx].value;
             }
         }
+        //add image
+        if (dic[key].media.length > 0) {
+            let media = dic[key].media;
+            for (let index = 0; index < dic[key].media.length; index++) {
+                let imageId = wb.addImage({
+                    base64: media[index].src,
+                    extension: media[index].ext,
+                });
+                //console.log(media[index])
+                let tl = { col: 2, row: 2 }
+                let br = { col: 6, row: 5 }
+                if (media[index].rect) {
+                    tl.col = media[index].rect.x / defaultCellSize.width;
+                    tl.row = media[index].rect.y / defaultCellSize.height - 1;
+                    br.col = (media[index].rect.x + media[index].rect.width) / defaultCellSize.width;
+                    br.row = (media[index].rect.y + media[index].rect.height) / defaultCellSize.height - 1;
+                    tl.col = tl.col < 0 ? 0 : tl.col;
+                    tl.row = tl.row < 0 ? 0 : tl.row;
+                    br.col = br.col < 0 ? 5 : br.col;
+                    br.row = br.row < 0 ? 5 : br.row;
+                }
+                ws.addImage(imageId, { tl, br, editAs: 'oneCell' });
+            }
+        }
+
     }
 
     //网上的a标签+blob下载的例子会文件损坏，原因不明。
@@ -104,6 +137,16 @@ const download = (dic) => {
 
 const getStamp = () => (new Date().getTime().toString() + parseInt(Math.random() * 100))
 
+/*
+media[]
+{
+fileType: 'img',
+ext:'png'
+src: e.target.result,
+location: pos,
+zIndex: 9990
+}
+*/
 const initGridDatas = () => {
     //字典
     let dic = new Array();
@@ -111,10 +154,12 @@ const initGridDatas = () => {
     dic[key1] = {
         name: 'Sheet1',
         grid: createBlankGridData(false),
+        media: [],
     }
     dic[getStamp()] = {
         name: 'Sheet2',
         grid: createBlankGridData(true),
+        media: [],
     }
     return {
         dic,
@@ -127,6 +172,7 @@ const initGridDatas = () => {
 const blankData = initGridDatas();
 
 const gridDatas = (state = blankData, action) => {
+    //console.log("gridDatas", action);
     switch (action.type) {
         case ADD_EXCEL_SHEET:
             {
@@ -141,7 +187,8 @@ const gridDatas = (state = blankData, action) => {
                 let addkey = getStamp();
                 addstate.dic[addkey] = {
                     grid: createBlankGridData(),
-                    name: 'Sheet' + nameidx
+                    name: 'Sheet' + nameidx,
+                    media: [],
                 };
                 addstate['selectedKey'] = addkey;
                 addstate.length += 1;
@@ -197,8 +244,56 @@ const gridDatas = (state = blankData, action) => {
                 return state;
             }
         case DOWNLOAD_EXCEL:
-            download(state.dic)
-            return state;
+            {
+                download(state.dic)
+                return state;
+            }
+        case GET_SELECTED_GRID:
+            {
+                return state;
+            }
+        case ADD_DRAG_IMAGE:
+            {
+                let key = state['selectedKey'];
+                if (key) {
+                    let dic = state.dic[key];
+                    dic.media.push(action.data);
+                    dic.media = [...dic.media]
+                }
+                return state;
+            }
+        case SORT_MEDIA_ELEMENTS:
+            {
+                let key = state['selectedKey'];
+                if (key) {
+                    let dic = state.dic[key];
+                    //排序是正常
+                    //dic.media.sort((a, b) => (a.zIndex - b.zIndex));
+                    // let top = dic.media.filter(data => data.zIndex > 9900);
+                    // if(top.length === 1)
+                    // {
+                    //     let rmidx = dic.media.indexOf(top[0]);
+                    //     dic.media.splice(rmidx,1);
+                    //     dic.media.push(top[0]);
+                    //     console.log('SORT_MEDIA_ELEMENTS HAS CHANGED', state)
+                    // }
+                    //console.log('SORT_MEDIA_ELEMENTS HAS CHANGED', dic)
+                    // let hasChange = false;
+                    // for (let idx = 0; idx < dic.media.length; idx++) {
+                    //     if (dic.media[idx].zIndex != idx) {
+                    //         hasChange = true;
+                    //     }
+                    //     dic.media[idx].zIndex = idx;
+                    // }
+                    // if (!hasChange || dic.media.length < 2) {
+                    //     //console.log('SORT_MEDIA_ELEMENTS NO CHANGE', state)
+                    //     return state;
+                    // }
+
+                    dic.media = [...dic.media]
+                }
+                return state;
+            }
         default:
             return state;
     }

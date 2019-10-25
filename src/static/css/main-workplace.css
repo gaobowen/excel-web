@@ -46,3 +46,12 @@
     position: relative;
     background-color: white;
 }
+
+.operateLayer{
+    background-color: #00000000;
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+}
+
