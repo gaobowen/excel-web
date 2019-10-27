@@ -26,15 +26,15 @@ Type an available github username, press the enter key.
 ### Edit Cells & Sheets
 - Type text in cells. 
 - Add & Delete Sheet.  
-- Drag Add Image.
+- Drag In & Delete Image.
 - Optimizing table performance,  Support 100K cells operations 
 
-![](readme_src/downloadoutput.gif)
+![](readme_src/outputedit2.gif)
 
 
 ### Download 
 Download your sheets as .xslx file. And you can open it in MS Office.
-![](readme_src/downloadoutput.gif)
+![](readme_src/outputdown2.gif)
 
 
 ## Future

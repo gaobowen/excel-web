@@ -55,9 +55,9 @@ const getCoordinates = (positionStr) => {
 
 const createBlankGridData = (isTest) => {
     let initGrid = [];
-    for (let row = 0; row < 1000; row++) {
+    for (let row = 0; row < 1001; row++) {
         initGrid.push([]);
-        for (let col = 0; col < 30; col++) {
+        for (let col = 0; col < 32; col++) {
             if (row === 0 && col === 0) {
                 initGrid[0].push({ readOnly: true, value: '' })
             } else if (row === 0 && col > 0) {
@@ -115,9 +115,9 @@ const download = (dic) => {
                 let tl = { col: 2, row: 2 }
                 let br = { col: 6, row: 5 }
                 if (media[index].rect) {
-                    tl.col = media[index].rect.x / defaultCellSize.width;
+                    tl.col = media[index].rect.x / defaultCellSize.width - 1;
                     tl.row = media[index].rect.y / defaultCellSize.height - 1;
-                    br.col = (media[index].rect.x + media[index].rect.width) / defaultCellSize.width;
+                    br.col = (media[index].rect.x + media[index].rect.width) / defaultCellSize.width - 1;
                     br.row = (media[index].rect.y + media[index].rect.height) / defaultCellSize.height - 1;
                     tl.col = tl.col < 0 ? 0 : tl.col;
                     tl.row = tl.row < 0 ? 0 : tl.row;
