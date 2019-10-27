@@ -1,0 +1,14 @@
+.media-scale-btn{
+    position: absolute;
+    right: -3.7px;
+    bottom: -3.8px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #ffffff;
+    background-color: #1890ff;
+    overflow: visible;
+}
+
+.media-scale-btn:hover{
+    cursor: nwse-resize;
+}

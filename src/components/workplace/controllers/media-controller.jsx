@@ -5,6 +5,8 @@ import { dragMove } from '../current-operate'
 import { getOperatePositon } from '../current-operate'
 import { hitTestOperate, sortMediaElements } from '../../../redux/workplace/actions'
 
+import '../../../static/css/media-controller.css'
+
 /*
 ctrlData:{
     refObj: null,
@@ -26,14 +28,18 @@ ctrlData:{
     }
 }
 */
+var ctrlMouseMove = function () {}
 
 function MediaController(props) {
     dragMove.completed();
-
+    //重复注册会导致多倍位移
+    window.removeEventListener('mousemove', ctrlMouseMove, true);
     //指向当前已渲染完成的，正在初始化的不算。
     const divEle = useRef(null);
     const [state, setstate] = useState(props.ctrlData)
+    //const [ctrlMouseMoveState, setCtrlMouseMoveState] = useState(null);
     if (!Object.is(state, props.ctrlData)) {
+        window.removeEventListener('mousemove', ctrlMouseMove, true);
         setstate(props.ctrlData);
     }
 
@@ -68,7 +74,7 @@ function MediaController(props) {
     // }, [x, y, width, height]);
 
     const onChangeRect = (rect) => {
-        if(!divEle.current){
+        if (!divEle.current) {
             return;
         }
         divEle.current.style.left = `${rect.x - 1.9}px`;
@@ -106,32 +112,23 @@ function MediaController(props) {
     let dragX = 0;
     let dragY = 0;
 
-    window.onkeydown = (e) => {
-        if (state.refObj && divEle.current && e.keyCode === 8) {
-            deleteEle();
-        }
-    };
-
-    window.addEventListener('mouseup', () => {
-        isDrag = false;
-        dragX = 0;
-        dragY = 0;
-    }, true);
-
-    window.addEventListener('mousemove', (e) => {
-        if (!isDrag || !props.ctrlData.refObj ||!selEle) {
+    const localDragMove = (e) => {
+        if (!isDrag || !props.ctrlData.refObj || !selEle) {
             return;
         }
-        let dx = e.clientX - dragX;
-        let dy = e.clientY - dragY;
-        dragX = e.clientX;
-        dragY = e.clientY;
+        let move = getOperatePositon(e.clientX, e.clientY);
+        let dx = move.x - dragX;
+        let dy = move.y - dragY;
+        //console.log("move.x - dragX", move.x - dragX)
+        dragX = move.x;
+        dragY = move.y;
         if (dx === 0 && dy === 0) {
             return;
         }
         let rect = { ...props.ctrlData.rect }
         rect.x += dx;
         rect.y += dy;
+
         onChangeRect(rect);
         props.ctrlData.rect = { ...rect };
         props.ctrlData.refObj.data.rect = { ...rect }
@@ -139,7 +136,67 @@ function MediaController(props) {
         selEle.style.top = `${rect.y}px`;
         selEle.style.width = `${rect.width}px`;
         selEle.style.height = `${rect.height}px`;
+    }
+
+    let isScale = false;
+    let scaleX = 0;
+    let scaleY = 0;
+    const localScale = (e) => {
+        if (!isScale || !props.ctrlData.refObj || !selEle) {
+            return;
+        }
+        let rect = { ...props.ctrlData.rect }
+        let move = getOperatePositon(e.clientX, e.clientY)
+        let dw = (move.x - scaleX);
+        let dh = (move.y - scaleY);
+        if (rect.width < 10 || rect.height < 10) {
+            return;
+        }
+        let sw = dw / rect.width;
+        let sh = dh / rect.height;
+        if (sw >= sh) {
+            rect.width *= ++sw;
+            rect.height *= sw;
+        } else {
+            rect.width *= ++sh;
+            rect.height *= sh;
+        }
+        scaleX = rect.x + rect.width;
+        scaleY = rect.y + rect.height;
+        onChangeRect(rect);
+        props.ctrlData.rect = { ...rect };
+        props.ctrlData.refObj.data.rect = { ...rect }
+        selEle.style.left = `${rect.x}px`;
+        selEle.style.top = `${rect.y}px`;
+        selEle.style.width = `${rect.width}px`;
+        selEle.style.height = `${rect.height}px`;
+    }
+
+    window.onkeydown = (e) => {
+        if (state.refObj && divEle.current && e.keyCode === 8) {
+            deleteEle();
+        }
+    };
+
+    window.addEventListener('mouseup', () => {
+        isScale = false;
+        isDrag = false;
+        dragX = 0;
+        dragY = 0;
+        scaleX = 0;
+        scaleY = 0;
     }, true);
+
+    ctrlMouseMove = (e) => {
+        if (isDrag) {
+            localDragMove(e);
+        } else if (isScale) {
+            localScale(e);
+        }
+    }
+
+    
+    window.addEventListener('mousemove', ctrlMouseMove, true);
 
     if (props.ctrlData.autoPress) {
         isDrag = true;
@@ -195,11 +252,12 @@ function MediaController(props) {
             onMouseDown={(e) => {
                 stopEvent(e);
                 if (display === 'block' && state.refObj) {
-                    dragX = e.clientX;
-                    dragY = e.clientY;
                     isDrag = true;
                     props.ctrlData.refObj.data.rect = { ...props.ctrlData.rect }
-                    props.ctrlData.hit = getOperatePositon(e.clientX, e.clientY)
+                    let hit = getOperatePositon(e.clientX, e.clientY)
+                    props.ctrlData.hit = { ...hit }
+                    dragX = hit.x;
+                    dragY = hit.y;
                 }
             }}
             onMouseMove={(e) => {
@@ -213,17 +271,17 @@ function MediaController(props) {
                 dragY = 0;
             }}
         >
-            <div style={{
-                position: 'absolute',
-                right: '-3.7px',
-                bottom: '-3.8px',
-                width: '6px',
-                height: '6px',
-                border: '1px solid #ffffff',
-                backgroundColor: '#1890ff',
-                overflow: 'visible',
-                pointerEvents: 'none'
-            }}>
+            <div className='media-scale-btn'
+                onMouseDown={e => {
+                    isDrag = false;
+                    isScale = true;
+                    let hit = getOperatePositon(e.clientX, e.clientY)
+                    scaleX = hit.x;
+                    scaleY = hit.y;
+                    //console.log('<div className=media-scale-btn')
+                    stopEvent(e);
+                }}
+            >
             </div>
         </div>
     );

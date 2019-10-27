@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { sortMediaElements, hitTestOperate } from '../../../redux/workplace/actions'
-import { zIndexEventListener } from '../current-operate'
+import { zIndexEventListener, getOperatePositon } from '../current-operate'
 /*
 data:{
     fileType: 'img',
@@ -24,12 +24,12 @@ function ImageView(props) {
     const divEle = useRef(null);
 
 
-    const onChangeRect = (target,rect) => {
+    const onChangeRect = (target, rect) => {
         //已过期的元素，不起效果
         //setRect({...rect})
         //这里的props.data.id 不一定= divEle.current.id
         //divEle.current可能为上一个元素，此字段只在重新渲染时才更新
-        if(!selEle){
+        if (!selEle) {
             return;
         }
 
@@ -133,10 +133,7 @@ function ImageView(props) {
                             onChangeRectRef,
                         },
                         eleType: 'media',
-                        hit: {
-                            x: event.clientX,
-                            y: event.clientY,
-                        },
+                        hit: getOperatePositon(event.clientX, event.clientY),
                         rect: {
                             r: 0,
                             ...props.data.rect
