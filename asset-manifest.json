@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/excel-web/static/css/main.2c2af6e5.chunk.css",
-    "main.js": "/excel-web/static/js/main.5acab84a.chunk.js",
-    "main.js.map": "/excel-web/static/js/main.5acab84a.chunk.js.map",
+    "main.css": "/excel-web/static/css/main.f23d72c7.chunk.css",
+    "main.js": "/excel-web/static/js/main.521d3813.chunk.js",
+    "main.js.map": "/excel-web/static/js/main.521d3813.chunk.js.map",
     "runtime-main.js": "/excel-web/static/js/runtime-main.3c403973.js",
     "runtime-main.js.map": "/excel-web/static/js/runtime-main.3c403973.js.map",
     "static/css/2.c9a040cc.chunk.css": "/excel-web/static/css/2.c9a040cc.chunk.css",
-    "static/js/2.2ef0eee3.chunk.js": "/excel-web/static/js/2.2ef0eee3.chunk.js",
-    "static/js/2.2ef0eee3.chunk.js.map": "/excel-web/static/js/2.2ef0eee3.chunk.js.map",
+    "static/js/2.7c0e3692.chunk.js": "/excel-web/static/js/2.7c0e3692.chunk.js",
+    "static/js/2.7c0e3692.chunk.js.map": "/excel-web/static/js/2.7c0e3692.chunk.js.map",
     "index.html": "/excel-web/index.html",
-    "precache-manifest.62a372e452b1d65f73748a15161521a5.js": "/excel-web/precache-manifest.62a372e452b1d65f73748a15161521a5.js",
+    "precache-manifest.7bd9d4af8d7f634c14e200e6a4ec51f3.js": "/excel-web/precache-manifest.7bd9d4af8d7f634c14e200e6a4ec51f3.js",
     "service-worker.js": "/excel-web/service-worker.js",
     "static/css/2.c9a040cc.chunk.css.map": "/excel-web/static/css/2.c9a040cc.chunk.css.map",
-    "static/css/main.2c2af6e5.chunk.css.map": "/excel-web/static/css/main.2c2af6e5.chunk.css.map",
+    "static/css/main.f23d72c7.chunk.css.map": "/excel-web/static/css/main.f23d72c7.chunk.css.map",
     "static/media/github.svg": "/excel-web/static/media/github.741c0ae1.svg",
     "static/media/login-input-bg.png": "/excel-web/static/media/login-input-bg.cf01c34c.png",
     "static/media/main-bg.png": "/excel-web/static/media/main-bg.197637b0.png"
@@ -20,8 +20,8 @@
   "entrypoints": [
     "static/js/runtime-main.3c403973.js",
     "static/css/2.c9a040cc.chunk.css",
-    "static/js/2.2ef0eee3.chunk.js",
-    "static/css/main.2c2af6e5.chunk.css",
-    "static/js/main.5acab84a.chunk.js"
+    "static/js/2.7c0e3692.chunk.js",
+    "static/css/main.f23d72c7.chunk.css",
+    "static/js/main.521d3813.chunk.js"
   ]
 }
