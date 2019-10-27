@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types'
 import { dragMove } from '../current-operate'
 import CellInput from '../element-content/cell-input'
@@ -20,30 +20,29 @@ function CellController(props) {
         overflow: 'visible',
     }
 
-    function getDisplayRect(props) {
-        return {
-            left: `${props.ctrlData.rect.x - 1.9}px`,
-            top: `${props.ctrlData.rect.y - 1.5}px`,
-            width: `${props.ctrlData.rect.width + 3}px`,
-            height: `${props.ctrlData.rect.height + 3.5}px`,
-        }
-    }
+    // function getDisplayRect(props) {
+    //     return {
+    //         left: `${props.ctrlData.rect.x - 1.9}px`,
+    //         top: `${props.ctrlData.rect.y - 1.5}px`,
+    //         width: `${props.ctrlData.rect.width + 3}px`,
+    //         height: `${props.ctrlData.rect.height + 3.5}px`,
+    //     }
+    // }
 
 
 
     return (
         //contentEditable="true"
-        //pointer-events: none; 忽略所有鼠标事件
-        <div autoFocus style={{
+        //pointer-events: none; 忽略所有鼠标事件autoFocus
+        <div  style={{
             ...mystyle,
             border: '2.2px solid #1890ff',
-            contentEditable: true,
             zIndex: 99999,
         }}
             onClick={event => {
                 event.stopPropagation();
             }}>
-                <CellInput ctrlData={props.ctrlData} />
+                <CellInput ctrlData={{...props.ctrlData}} />
             <div style={{
                 position: 'absolute',
                 right: '-3.7px',

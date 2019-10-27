@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import Datasheet from 'react-datasheet';
+//import Datasheet from 'react-datasheet';
 import { connect } from 'react-redux'
+import { currentTbody, scrollData } from './current-operate'
 import { changedExcelSize, changeExcelSheetSelected } from '../../redux/workplace/actions'
 
 import '../../static/css/excel-sheet.css'
-
+import '../../static/css/static-table.css'
 
 
 //此开源控件在每个cell上都单独处理了事件，当初始化数组达到几百上千行时，操作会延迟卡顿，
 //作为excel这种数据量比较大的控件来说，这样的设计思路是不可行的
-//excel正确的设计方式 因该是数据展示层在下面，上面覆盖统一操作层（建议用canvas）作为交互层
+//excel正确的设计方式 因该是数据展示层在下面（建议用canvas），上面覆盖统一操作层作为交互层
 class ExcelSheet extends React.Component {
     constructor(props) {
         super(props)
     }
-
 
     //坐标换算
     //列A-ZZ 行1-n
@@ -76,7 +76,39 @@ class ExcelSheet extends React.Component {
 
         return (
             <div style={{ width: this.totalWidth }}>
-                <Datasheet
+                {/* 第三方控件效率太差，100多行就开始卡顿，暂时采用table测试性能，不行就用canvas */}
+                {/* 经过测试 在5000行 30列， 15万数据时，使用 table 开始有明显的操作延迟 */}
+                <table className='static-table' borderspacing={0} cellSpacing={0} cellPadding={0} >
+                    <tbody id='excel-sheet-main-tbody' ref={x => { currentTbody.current = x }} >{
+                        this.grid.map((row, i) => {
+                            return (
+                                <tr key={`-${i}-`} className='row' style={{}}>{
+                                    row.map((cell, j) => {
+                                        return (
+                                            <td key={`-${i}-|${j}|`} className='cell' style={
+                                                (()=>{if(i===0 || j === 0){
+                                                    return {backgroundColor:'#ddd'}
+                                                }})()
+                                            }>
+                                                {/*border会影响布局*/}
+                                                <div
+                                                    style={{ 
+                                                        width: '58px', 
+                                                        height: '20px', 
+                                                        textOverflow: 'ellipsis' 
+                                                        }}>
+                                                    {cell.value}
+                                                </div>
+                                            </td>)
+                                    })}
+                                </tr>)
+                        })
+                    }
+                    </tbody>
+                </table>
+                {/*todo canvas 手动绘制表格 ... */}
+
+                {/* <Datasheet
                     data={this.grid}
                     valueRenderer={(cell) => cell.value}
                     // eslint-disable-next-line no-unused-vars
@@ -88,7 +120,7 @@ class ExcelSheet extends React.Component {
                         })
                         this.render()
                     }}
-                />
+                /> */}
             </div>
         )
     }

@@ -6,7 +6,8 @@ import {
     DOWNLOAD_EXCEL,
     GET_SELECTED_GRID,
     ADD_DRAG_IMAGE,
-    SORT_MEDIA_ELEMENTS
+    SORT_MEDIA_ELEMENTS,
+    COMMIT_UPDATE_GRIDDATAS
 } from './action-types'
 import Excel from 'exceljs';
 import FileSaver from 'file-saver'
@@ -51,9 +52,10 @@ const getCoordinates = (positionStr) => {
     }
 }
 
+
 const createBlankGridData = (isTest) => {
     let initGrid = [];
-    for (let row = 0; row < 160; row++) {
+    for (let row = 0; row < 1000; row++) {
         initGrid.push([]);
         for (let col = 0; col < 30; col++) {
             if (row === 0 && col === 0) {
@@ -267,32 +269,34 @@ const gridDatas = (state = blankData, action) => {
                 let key = state['selectedKey'];
                 if (key) {
                     let dic = state.dic[key];
-                    //排序是正常
-                    //dic.media.sort((a, b) => (a.zIndex - b.zIndex));
-                    // let top = dic.media.filter(data => data.zIndex > 9900);
-                    // if(top.length === 1)
-                    // {
-                    //     let rmidx = dic.media.indexOf(top[0]);
-                    //     dic.media.splice(rmidx,1);
-                    //     dic.media.push(top[0]);
-                    //     console.log('SORT_MEDIA_ELEMENTS HAS CHANGED', state)
-                    // }
-                    //console.log('SORT_MEDIA_ELEMENTS HAS CHANGED', dic)
-                    // let hasChange = false;
-                    // for (let idx = 0; idx < dic.media.length; idx++) {
-                    //     if (dic.media[idx].zIndex != idx) {
-                    //         hasChange = true;
-                    //     }
-                    //     dic.media[idx].zIndex = idx;
-                    // }
-                    // if (!hasChange || dic.media.length < 2) {
-                    //     //console.log('SORT_MEDIA_ELEMENTS NO CHANGE', state)
-                    //     return state;
-                    // }
-
-                    dic.media = [...dic.media]
+                    //删除
+                    let deleteIdx = dic.media.findIndex(e => {
+                        return e.isDelete;
+                    })
+                    if (deleteIdx > -1) {
+                        //拼接此元素的前后部分
+                        dic.media = dic.media.slice(0, deleteIdx)
+                            .concat(dic.media.slice(deleteIdx + 1, dic.media.length));
+                    }
+                    //排序正常
+                    dic.media.sort((a, b) => (a.zIndex - b.zIndex));
+                    let hasChange = false;
+                    for (let idx = 0; idx < dic.media.length; idx++) {
+                        if (dic.media[idx].zIndex !== idx) {
+                            hasChange = true;
+                        }
+                        dic.media[idx].zIndex = idx;
+                    }
+                    if (!hasChange || dic.media.length < 2) {
+                        return state;
+                    }
+                    //dic.media = [...dic.media]
                 }
                 return state;
+            }
+        case COMMIT_UPDATE_GRIDDATAS:
+            {
+                return { ...state }
             }
         default:
             return state;

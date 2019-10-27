@@ -8,7 +8,8 @@ import {
     HIT_TEST_OPERATE,
     GET_SELECTED_GRID,
     ADD_DRAG_IMAGE,
-    SORT_MEDIA_ELEMENTS
+    SORT_MEDIA_ELEMENTS,
+    COMMIT_UPDATE_GRIDDATAS
 } from './action-types';
 
 
@@ -31,3 +32,5 @@ export const hitTestOperate = (params) => ({ type: HIT_TEST_OPERATE, data: param
 export const addDragImage = (params) => ({ type: ADD_DRAG_IMAGE, data: params });
 
 export const sortMediaElements = (params) => ({ type: SORT_MEDIA_ELEMENTS, data: params });
+
+export const commitUpdateGridDatas = (params) => ({ type: COMMIT_UPDATE_GRIDDATAS, data: params });

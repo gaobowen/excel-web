@@ -15,7 +15,8 @@ import {
 import {
     scrollData,
     headerData,
-    getOperatePositon
+    getOperatePositon,
+    getStampId
 } from './current-operate'
 
 import MediaContainer from './media-container'
@@ -60,9 +61,9 @@ class MainWorkplace extends React.Component {
                 //this.currentController.props.ctrlData
                 //console.log(this.currentController)
             }
-            this.currentController = (<CellController ctrlData={this.props.ctrlData} />)
+            this.currentController = (<CellController ctrlData={{...this.props.ctrlData}} />)
         } else if (this.props.ctrlData.eleType === 'media') {
-            this.currentController = (<MediaController ctrlData={this.props.ctrlData} />)
+            this.currentController = (<MediaController ctrlData={{...this.props.ctrlData}} />)
         }
         return this.currentController;
     }
@@ -74,8 +75,9 @@ class MainWorkplace extends React.Component {
 
     hitOperateLayerHandle = (e) => {
         this.ignoreDrag(e)
+        e.target.focus();
         //console.log('clickOperateLayerHandle', e.target)
-        let hit = getOperatePositon(e.clientX, e.clientY)
+        let hit = getOperatePositon(e.clientX, e.clientY);
         //console.log(this.props.ctrlData.hit)
         if (e.clientX > this.props.excelSheet.width
             || e.clientY > this.props.excelSheet.height) {
@@ -102,13 +104,14 @@ class MainWorkplace extends React.Component {
         let files = event.dataTransfer.files;
         let file = files[0];
         if (file) {
-            console.log(file)
+            //console.log(file)
             let reader = new FileReader();
             let pos = getOperatePositon(event.clientX, event.clientY)
             let add = this.props.addDragImage;
             let exts = file.name.split('.');
             reader.onload = function (e) {
                 add({
+                    id : getStampId(),
                     fileType: 'img',
                     ext: exts[exts.length - 1],
                     src: e.target.result,
@@ -142,6 +145,7 @@ class MainWorkplace extends React.Component {
                             <div className='operateLayer' id='operateLayerId'
                                 //屏蔽点击穿透！
                                 onClick={e => this.ignoreDrag(e)}
+                                onContextMenu={e => this.ignoreDrag(e)}
                                 onMouseDown={this.hitOperateLayerHandle}
                                 onDragEnter={this.ignoreDrag}
                                 onDragOver={(event => {

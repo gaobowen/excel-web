@@ -15,19 +15,43 @@ data:{
 
 function ImageView(props) {
     //console.log(props)//方法已挂载
+    const [id, setId] = useState(props.data.id);
     const [data, setData] = useState(props.data);
+    const [zidx, setZidx] = useState(props.data.zIndex);
+    const [target, setTarget] = useState(null);
+    const [rect, setRect] = useState(props.data.reat);
+    const [selEle, setSelEle] = useState(null);
     const divEle = useRef(null);
-    
-    const onChangeRect = (rect) => {
-        props.data.rect = { ...rect }
-        props.data.location = rect
-        divEle.current.style.left = `${rect.x}px`;
-        divEle.current.style.top = `${rect.y}px`;
-        divEle.current.style.width = `${rect.width}px`;
-        divEle.current.style.height = `${rect.height}px`;
+
+
+    const onChangeRect = (target,rect) => {
+        //已过期的元素，不起效果
+        //setRect({...rect})
+        //这里的props.data.id 不一定= divEle.current.id
+        //divEle.current可能为上一个元素，此字段只在重新渲染时才更新
+        if(!selEle){
+            return;
+        }
+
+        selEle.style.left = `${rect.x}px`;
+        selEle.style.top = `${rect.y}px`;
+        selEle.style.width = `${rect.width}px`;
+        selEle.style.height = `${rect.height}px`;
+
+        // props.data.location = rect
+        // divEle.current.style.left = `${rect.x}px`;
+        // divEle.current.style.top = `${rect.y}px`;
+        // divEle.current.style.width = `${rect.width}px`;
+        // divEle.current.style.height = `${rect.height}px`;
+
+        // console.log('divEle.current.id', divEle.current.id);
+        //console.log('onChangeRect props.data.id', props.data.id);
     }
 
+    const onChangeRectRef = useRef(onChangeRect);
 
+    //console.log('ImageView Init props.ctrlData.', props.ctrlData)
+    //props.ctrlData.refObj.changeSelect = onChangeRect;
     const mystyle = {
         backgroundColor: '#00000088',
         position: 'absolute',
@@ -62,12 +86,11 @@ function ImageView(props) {
             props.data.rect.y = props.data.location.y - heig / 2;
             props.data.rect.width = wid;
             props.data.rect.height = heig;
-
             props.data.location.x = props.data.rect.x;
             props.data.location.y = props.data.rect.y;
+
             setData({ ...props.data })
-            //console.log(wid, heig)
-            //console.log(img.width, img.height)
+
         }
 
     }
@@ -79,20 +102,18 @@ function ImageView(props) {
         mystyle.height = `${props.data.rect.height}px`;
     }
 
-    function setRect(rect) {
-        props.data.rect = { ...rect }
-        setData({ ...props.data })
-    }
 
     function setOriginalSize() {
         props.data.rect.width = props.data.originalSize.width;
         props.data.rect.height = props.data.originalSize.height;
         setData({ ...props.data })
     }
-    
-    console.log('ImageView render', props)
+
+    //console.log('ImageView render', props)
     return (
-        <div style={{ ...mystyle }}
+        <div
+            id={props.data.id}
+            style={{ ...mystyle }}
             ref={divEle}
             οndragstart="return false;"
             draggable="false"
@@ -103,29 +124,43 @@ function ImageView(props) {
             onMouseDown={event => {
                 event.stopPropagation();
                 event.preventDefault();
+                //dataRef.current.zIndex = 9990;
+                //divEle.current.style.zIndex = 9990;
                 props.data.zIndex = 9990;
-                divEle.current.style.zIndex = 9990;
+                setZidx(9990);
                 props.sortMediaElements();
                 zIndexEventListener.callback();
+                setTarget(event.target)
+                //divEle.current = event.target;
+                let sel = document.getElementById(props.data.id)
+                sel.style.zIndex = 9990;
+                setId(props.data.id)
                 props.hitTestOperate({
                     ctrlData: {
                         refObj: {
+                            id: props.data.id,
                             current: divEle.current,
                             divRef: divEle,
                             onChangeRect,
-                            data: props.data
+                            data: props.data,
+                            onChangeRectRef,
                         },
                         eleType: 'media',
                         hit: {
-                            x: props.data.rect.x,
-                            y: props.data.rect.y
+                            x: event.clientX,
+                            y: event.clientY,
                         },
                         rect: {
                             r: 0,
                             ...props.data.rect
-                        }
+                        },
+                        autoPress: true,
                     }
                 });
+
+
+
+
 
             }}
             onMouseUp={event => {
@@ -169,6 +204,7 @@ function ImageView(props) {
 
 ImageView.propTypes = {
     data: PropTypes.object.isRequired,
+    ctrlData: PropTypes.object.isRequired,
     sortMediaElements: PropTypes.func.isRequired,
     hitTestOperate: PropTypes.func.isRequired,
 }

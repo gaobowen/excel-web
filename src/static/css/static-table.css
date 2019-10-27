@@ -1,0 +1,30 @@
+.static-table{
+    border-spacing: 0;
+    text-overflow: ellipsis;
+    table-layout:fixed;
+    overflow: hidden;  
+    white-space: nowrap; 
+}
+
+.static-table .row{
+    height: 22px;
+    text-overflow: ellipsis;
+    table-layout:fixed;
+    overflow: hidden;  
+    white-space: nowrap; 
+}
+
+.static-table .row .cell{
+    width: 60px;
+    height: 22px;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    table-layout:fixed;
+    overflow: hidden;  
+    white-space: nowrap; 
+    display: table-cell;
+    /* border-width: 1px;
+    border-color: #aaa; 分开设置显示有问题*/
+}
+

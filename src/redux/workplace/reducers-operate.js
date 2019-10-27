@@ -23,7 +23,8 @@ const initData = {
         y: 22,
         r: 0,
         ...defaultCellSize
-    }
+    },
+    coord: { rowIdx: 1, colIdx: 1 }
 }
 
 function locateVertical(defaultHeight, heights, offsetY) {
@@ -89,26 +90,30 @@ const ctrlData = (state = initData, action) => {
             {
                 //注意引用
                 state.refObj = null;
+                state.preRect = state.rect;
                 state.eleType = action.data.ctrlData.eleType;
                 if (action.data.ctrlData.eleType === 'cell') {
                     let idxH = locateHorizontal(defaultCellSize.width, [], action.data.ctrlData.hit.x);
                     let idxV = locateVertical(defaultCellSize.height, [], action.data.ctrlData.hit.y);
-
+                    //不允许选中
+                    if(idxH < 1 || idxV < 1){
+                        return state;
+                    }
                     // 将来要改成实际宽高
                     let x = idxH * defaultCellSize.width;
                     let y = idxV * defaultCellSize.height;
                     let width = defaultCellSize.width;
                     let height = defaultCellSize.height;
                     state.rect = { x, y, width, height }
-                    state.coord = { x: idxH, y: idxV }
-                    
+                    state.coord = { rowIdx: idxV, colIdx: idxH }
+
                 } else if (action.data.ctrlData.eleType === 'media') {
-                    state.refObj = action.data.ctrlData.refObj;
-                    action.data.ctrlData.preRect = { ...state.rect }
+                    state.refObj = {...action.data.ctrlData.refObj};
                     state.rect = { ...action.data.ctrlData.rect }
-                    //action.data.ctrlData.refObj
+                    state.autoPress = action.data.ctrlData.autoPress;
+                    state.hit = {...action.data.ctrlData.hit}
                 }
-                //console.log('HIT_TEST_OPERATE')
+                
                 return { ...state }
             }
         default:
