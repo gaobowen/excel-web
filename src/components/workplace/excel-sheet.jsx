@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 //import Datasheet from 'react-datasheet';
 import { connect } from 'react-redux'
-import { currentTbody, scrollData } from './current-operate'
+import { currentTbody } from './current-operate'
 import { changedExcelSize, changeExcelSheetSelected } from '../../redux/workplace/actions'
 
 import '../../static/css/excel-sheet.css'

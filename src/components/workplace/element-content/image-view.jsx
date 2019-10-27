@@ -38,20 +38,10 @@ function ImageView(props) {
         selEle.style.width = `${rect.width}px`;
         selEle.style.height = `${rect.height}px`;
 
-        // props.data.location = rect
-        // divEle.current.style.left = `${rect.x}px`;
-        // divEle.current.style.top = `${rect.y}px`;
-        // divEle.current.style.width = `${rect.width}px`;
-        // divEle.current.style.height = `${rect.height}px`;
-
-        // console.log('divEle.current.id', divEle.current.id);
-        //console.log('onChangeRect props.data.id', props.data.id);
     }
 
     const onChangeRectRef = useRef(onChangeRect);
 
-    //console.log('ImageView Init props.ctrlData.', props.ctrlData)
-    //props.ctrlData.refObj.changeSelect = onChangeRect;
     const mystyle = {
         backgroundColor: '#00000088',
         position: 'absolute',
@@ -90,7 +80,6 @@ function ImageView(props) {
             props.data.location.y = props.data.rect.y;
 
             setData({ ...props.data })
-
         }
 
     }
@@ -103,6 +92,7 @@ function ImageView(props) {
     }
 
 
+    // eslint-disable-next-line no-unused-vars
     function setOriginalSize() {
         props.data.rect.width = props.data.originalSize.width;
         props.data.rect.height = props.data.originalSize.height;
@@ -124,14 +114,11 @@ function ImageView(props) {
             onMouseDown={event => {
                 event.stopPropagation();
                 event.preventDefault();
-                //dataRef.current.zIndex = 9990;
-                //divEle.current.style.zIndex = 9990;
                 props.data.zIndex = 9990;
                 setZidx(9990);
                 props.sortMediaElements();
                 zIndexEventListener.callback();
                 setTarget(event.target)
-                //divEle.current = event.target;
                 let sel = document.getElementById(props.data.id)
                 sel.style.zIndex = 9990;
                 setId(props.data.id)
@@ -157,10 +144,6 @@ function ImageView(props) {
                         autoPress: true,
                     }
                 });
-
-
-
-
 
             }}
             onMouseUp={event => {

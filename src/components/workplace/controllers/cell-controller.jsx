@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { dragMove } from '../current-operate'
 import CellInput from '../element-content/cell-input'
-//import { Motion, spring } from 'react-motion';
+
 
 function CellController(props) {
     dragMove.completed();
-    //const [data, setData] = useState(null);
-    //console.log(props)
+
     let display = props.ctrlData.eleType === 'cell' ? 'block' : 'none';
     const mystyle = {
         display: display,
@@ -20,14 +19,15 @@ function CellController(props) {
         overflow: 'visible',
     }
 
-    // function getDisplayRect(props) {
-    //     return {
-    //         left: `${props.ctrlData.rect.x - 1.9}px`,
-    //         top: `${props.ctrlData.rect.y - 1.5}px`,
-    //         width: `${props.ctrlData.rect.width + 3}px`,
-    //         height: `${props.ctrlData.rect.height + 3.5}px`,
-    //     }
-    // }
+    // eslint-disable-next-line no-unused-vars
+    function getDisplayRect(props) {
+        return {
+            left: `${props.ctrlData.rect.x - 1.9}px`,
+            top: `${props.ctrlData.rect.y - 1.5}px`,
+            width: `${props.ctrlData.rect.width + 3}px`,
+            height: `${props.ctrlData.rect.height + 3.5}px`,
+        }
+    }
 
 
 
