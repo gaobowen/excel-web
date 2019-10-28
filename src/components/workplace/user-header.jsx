@@ -31,8 +31,10 @@ class UserHeader extends React.Component {
         );
     }
 
-    download = () => {
-        this.props.downloadExcel()
+    download = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        this.props.downloadExcel();
     }
 
     render() {
