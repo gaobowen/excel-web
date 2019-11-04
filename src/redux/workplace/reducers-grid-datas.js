@@ -87,7 +87,7 @@ const download = (dic) => {
     for (let key in dic) {
         const ws = wb.addWorksheet(dic[key].name);
         ws.properties.defaultRowHeight = 17;
-        //这里行列不能搞混
+        // 这里行列不能搞混
         let rowcount = dic[key].grid.length;
         let colcount = dic[key].grid[0].length;
 

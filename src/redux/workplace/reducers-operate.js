@@ -88,14 +88,14 @@ const ctrlData = (state = initData, action) => {
     switch (action.type) {
         case HIT_TEST_OPERATE:
             {
-                //注意引用
+                // 注意引用
                 state.refObj = null;
                 state.preRect = state.rect;
                 state.eleType = action.data.ctrlData.eleType;
                 if (action.data.ctrlData.eleType === 'cell') {
                     let idxH = locateHorizontal(defaultCellSize.width, [], action.data.ctrlData.hit.x);
                     let idxV = locateVertical(defaultCellSize.height, [], action.data.ctrlData.hit.y);
-                    //不允许选中
+                    // 不允许选中
                     if(idxH < 1 || idxV < 1){
                         return state;
                     }

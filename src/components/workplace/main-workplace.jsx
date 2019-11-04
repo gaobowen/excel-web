@@ -21,6 +21,7 @@ import {
 import MediaContainer from './media-container'
 import CellController from './controllers/cell-controller'
 import MediaController from './controllers/media-controller'
+import { ReadBase64Dimension } from '../../utils/image-dimension'
 import '../../static/css/main-workplace.css'
 
 
@@ -105,14 +106,18 @@ class MainWorkplace extends React.Component {
             let add = this.props.addDragImage;
             let exts = file.name.split('.');
             reader.onload = function (e) {
+                let addExt = exts[exts.length - 1].toLowerCase();
+                let originalSize = ReadBase64Dimension(e.target.result, addExt);
+                //console.log('originalSize', originalSize)
                 add({
                     id: getStampId(),
                     fileType: 'img',
-                    ext: exts[exts.length - 1],
+                    ext: addExt,
                     src: e.target.result,
                     location: pos,
                     zIndex: 9990,
-                    autoSeleted: true
+                    autoSeleted: true,
+                    originalSize
                 })
             }
             reader.readAsDataURL(file);

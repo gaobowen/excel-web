@@ -33,7 +33,7 @@ function CellInput(props) {
         height: `${props.ctrlData.rect.height - 1}px`,
         position: 'absolute',
         overflow: 'hidden',
-        
+
     }
 
     const allStyle = {
@@ -82,7 +82,7 @@ function CellInput(props) {
                 divStyle: dstyle,
                 inputStyle: inStyle
             });
-            inputRef.current.readOnly='';
+            inputRef.current.readOnly = '';
             inputRef.current.focus();
         } else {
             inputRef.current.blur();
@@ -90,7 +90,7 @@ function CellInput(props) {
             dstyle.opacity = '0';
             let inStyle = { ...inputStyle };
             inStyle.pointerEvents = 'none';
-            inputRef.current.readOnly='readonly';
+            inputRef.current.readOnly = 'readonly';
             setAllStyleData({
                 divStyle: dstyle,
                 inputStyle: inStyle
@@ -109,14 +109,16 @@ function CellInput(props) {
             onDoubleClick={() => {
                 setEditState(true);
             }}
-            onClick={stopEvent}
-            onMouseDown={stopEvent}
+        // onClick={stopEvent}
+        // onMouseDown={stopEvent}
         >
             {/* {console.log('inputValue.value render = ', inputValue.value)} */}
             {/* {inputValue.value} */}
             {/*ie9 onpropertychange； html5 oninput*/}
             <input
-                type={'text'} 
+                // onClick={stopEvent}
+                // onMouseDown={stopEvent}
+                type={'text'}
                 readOnly="readonly"
                 style={{ ...allStyleData.inputStyle }}
                 ref={inputRef}

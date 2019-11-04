@@ -50,16 +50,12 @@ function ImageView(props) {
         zIndex: props.data.zIndex,
     }
 
-    if (!props.data.rect) {
-        let img = new Image();
-        img.src = props.data.src;
-        img.onload = () => {
-            let wid = img.width;
-            let heig = img.height;
-            props.data.originalSize = {
-                width: wid,
-                height: heig
-            }
+    const initImageSize = () => {
+        if (props.data.originalSize
+            && props.data.originalSize.width
+            && props.data.originalSize.height) {
+            let wid = props.data.originalSize.width;
+            let heig = props.data.originalSize.width;
             //等比缩小
             if (wid > 500) {
                 let ratio = heig / wid;
@@ -78,10 +74,26 @@ function ImageView(props) {
             props.data.rect.height = heig;
             props.data.location.x = props.data.rect.x;
             props.data.location.y = props.data.rect.y;
-
             setData({ ...props.data })
         }
+    }
 
+    if (!props.data.rect) {
+        if (props.data.originalSize) {
+            initImageSize();
+        }else{
+            let img = new Image();
+            img.src = props.data.src;
+            img.onload = () => {
+                let wid = img.width;
+                let heig = img.height;
+                props.data.originalSize = {
+                    width: wid,
+                    height: heig
+                }
+                initImageSize();
+            }
+        }
     }
 
     if (props.data && props.data.rect) {
